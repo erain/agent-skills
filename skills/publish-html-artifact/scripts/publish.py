@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 DEFAULT_REPO = Path("/home/ubuntu/src/knowledge-pages")
-DEFAULT_BASE_URL = "https://blog.yiyu.me/knowledge-pages"
+DEFAULT_BASE_URL = "https://knowledge.11tech.xyz"
 
 
 def run(cmd: list[str], cwd: Path) -> str:

@@ -17,7 +17,7 @@ Use this skill after an HTML artifact has been created and validated.
 - summary
 - tags
 - target repo path, default `/home/ubuntu/src/knowledge-pages`
-- base URL, default `https://erain.github.io/knowledge-pages`
+- base URL, default `https://knowledge.11tech.xyz`
 
 ## Workflow
 
