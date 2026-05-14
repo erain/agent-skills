@@ -1,0 +1,7 @@
+interface:
+  display_name: "Knowledge To Slides"
+  short_description: "Create polished HTML slide decks"
+  brand_color: "#00ADD8"
+  default_prompt: "Use $knowledge-to-slides to turn what we just learned into a polished self-contained HTML slide deck."
+policy:
+  allow_implicit_invocation: true

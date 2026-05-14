@@ -1,0 +1,7 @@
+interface:
+  display_name: "Publish HTML Artifact"
+  short_description: "Publish HTML artifacts to static hosting"
+  brand_color: "#7FDBB6"
+  default_prompt: "Use $publish-html-artifact to publish this completed HTML artifact and return the live URL."
+policy:
+  allow_implicit_invocation: true

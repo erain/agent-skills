@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}}</title>
+  <style>
+    :root { color-scheme: dark; --bg: #071014; --text: #ecf4f6; --muted: #9eb0b7; --line: #25454f; --cyan: #00add8; --green: #7fdbb6; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font: 16px/1.5 Inter, ui-sans-serif, system-ui, sans-serif; }
+    body::before { content: ""; position: fixed; inset: 0; background: linear-gradient(rgba(0, 173, 216, .055) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 173, 216, .055) 1px, transparent 1px), var(--bg); background-size: 32px 32px; pointer-events: none; }
+    .slide { position: absolute; inset: 0; display: grid; grid-template-columns: 1.05fr .95fr; gap: 44px; align-items: center; padding: clamp(34px, 5vw, 72px); opacity: 0; transform: translateX(30px); pointer-events: none; transition: opacity 180ms ease, transform 180ms ease; }
+    .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+    .slide.single { grid-template-columns: 1fr; }
+    .eyebrow { color: var(--green); font: 700 13px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; }
+    h1, h2 { margin: 14px 0 20px; line-height: .94; letter-spacing: 0; }
+    h1 { font-size: clamp(52px, 9vw, 116px); }
+    h2 { font-size: clamp(42px, 7vw, 86px); }
+    p { margin: 0; color: var(--muted); font-size: clamp(18px, 2.1vw, 26px); }
+    .panel { border: 1px solid var(--line); border-radius: 8px; padding: 24px; background: rgba(255,255,255,.04); }
+    .footer { position: fixed; left: 22px; right: 22px; bottom: 18px; display: flex; justify-content: space-between; color: var(--muted); font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+    .progress { position: fixed; left: 0; bottom: 0; height: 4px; width: calc(var(--progress, 0) * 100%); background: linear-gradient(90deg, var(--cyan), var(--green)); }
+    @media (max-width: 900px) { html, body { overflow: auto; } .slide, .slide.single { position: relative; min-height: 100vh; display: none; grid-template-columns: 1fr; } .slide.active { display: grid; } .footer .hint { display: none; } }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide active single">
+      <div>
+        <div class="eyebrow">{{EYEBROW}}</div>
+        <h1>{{TITLE}}</h1>
+        <p>{{SUBTITLE}}</p>
+      </div>
+    </section>
+  </main>
+  <div class="footer"><span>{{TITLE}}</span><span class="hint">arrow keys navigate</span><span id="count">1 / 1</span></div>
+  <div class="progress" aria-hidden="true"></div>
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const count = document.querySelector('#count');
+    const progress = document.querySelector('.progress');
+    let index = 0;
+    function show(next) {
+      index = Math.max(0, Math.min(slides.length - 1, next));
+      slides.forEach((slide, i) => { const active = i === index; slide.classList.toggle('active', active); slide.setAttribute('aria-hidden', active ? 'false' : 'true'); });
+      count.textContent = `${index + 1} / ${slides.length}`;
+      progress.style.setProperty('--progress', String((index + 1) / slides.length));
+      history.replaceState(null, '', `#${index + 1}`);
+    }
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === ' ') { event.preventDefault(); show(index + 1); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); show(index - 1); }
+    });
+    show(0);
+  </script>
+</body>
+</html>
