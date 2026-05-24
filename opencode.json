@@ -1,0 +1,14 @@
+{
+  "skills": [
+    {
+      "name": "knowledge-to-slides",
+      "path": "skills/knowledge-to-slides/SKILL.md",
+      "description": "Create polished self-contained HTML slide decks from engineering knowledge"
+    },
+    {
+      "name": "publish-html-artifact",
+      "path": "skills/publish-html-artifact/SKILL.md",
+      "description": "Publish finished HTML artifacts to a static knowledge site"
+    }
+  ]
+}

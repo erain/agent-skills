@@ -1,40 +1,47 @@
 # Agent Notes
 
-This repository is a portable skill pack, not an application runtime. Treat each
-`skills/<name>/SKILL.md` file as the primary instruction entry point for that
-skill, and treat bundled scripts/assets as implementation aids.
+This is a portable skill pack for coding agents, not an application runtime.
+Each `skills/<name>/SKILL.md` is the primary instruction entry point. Bundled
+scripts and assets are implementation aids.
 
 ## Editing Guidelines
 
-- Keep skill instructions agent-neutral. Mention Codex, OpenClaw, pi, opencode,
-  or other agents only in adapter documentation.
-- Do not duplicate large workflow text across files. Put core behavior in
-  `SKILL.md` and installation/adapter guidance in `README.md` or `docs/`.
-- Keep skill directories small and purposeful: `SKILL.md`, optional `scripts/`,
-  optional `assets/`, optional `agents/`.
-- Use deterministic Python or shell helpers when the workflow benefits from
-  repeatable validation or publishing.
-- When changing the knowledge site URL, default hosting repo, or visibility
-  semantics, update `README.md`, the relevant `SKILL.md`, and publishing scripts
-  together.
+- Keep skill instructions agent-neutral. Mention specific agents only in adapter
+  documentation under `docs/` or `agents/`.
+- Do not duplicate workflow text across files. Core behavior lives in
+  `SKILL.md`; install and adapter guidance in `README.md` / `docs/`.
+- Keep each skill directory lean: `SKILL.md`, optional `scripts/`, optional
+  `assets/`, optional `agents/`.
+- Use deterministic Python or shell helpers for repeatable validation and
+  publishing.
+- When changing the hosting repo path, base URL, or visibility semantics, update
+  `README.md`, the relevant `SKILL.md`, and publishing scripts together.
 
 ## Validation
 
-Before committing, run:
+Before committing, verify all changes:
 
 ```sh
+# Python syntax check
 python3 -m py_compile \
   skills/knowledge-to-slides/scripts/validate_deck.py \
   skills/publish-html-artifact/scripts/publish.py
 
-python3 /home/ubuntu/.codex/skills/.system/skill-creator/scripts/quick_validate.py \
-  skills/knowledge-to-slides
-
-python3 /home/ubuntu/.codex/skills/.system/skill-creator/scripts/quick_validate.py \
-  skills/publish-html-artifact
-
+# No whitespace or merge conflicts
 git diff --check
 ```
 
-If the Codex skill validator is unavailable, still verify frontmatter, script
-syntax, and repository diffs manually.
+Also inspect each modified `SKILL.md` to ensure frontmatter is valid YAML and
+the workflow reads cleanly as operating instructions for any agent.
+
+## Agent Entry Points
+
+This repo provides auto-discovery for multiple agents:
+
+| Agent | File | Purpose |
+|-------|------|---------|
+| Claude Code | `CLAUDE.md` (root) | Project overview and skill table |
+| opencode | `opencode.json` (root) | Skill list for the built-in skill loader |
+| Codex | `skills/*/agents/openai.yaml` | Per-skill adapter metadata |
+
+For setup details, see `docs/agent-adapters.md`.
